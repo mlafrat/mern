@@ -1,7 +1,12 @@
 const express = require("express");
 const app = express();
-
+cors = require("cors");
 const port = process.env.PORT || 5000;
+
+app.get('/cors', (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.send({ "msg": "This has CORS enabled 🎈" })
+})
 
 app.options('/login', (req, res) => {
     res.header('Access-Control-Allow-Origin', '*');
