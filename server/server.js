@@ -8,7 +8,7 @@ const loginRoute = require("./routes/login");
 const port = process.env.PORT || 5000;
 
 // Configure CORS for specific origins
-const allowedOrigins = ['https://mern-omega-livid.vercel.app/', 'http://localhost:3000'];
+const allowedOrigins = ['https://mern-omega-livid.vercel.app', 'http://localhost:3000'];
 
 const corsOptions = {
     origin: function (origin, callback) {
@@ -32,7 +32,7 @@ connectToMongo()
         console.log("Connected to MongoDB");
 
         // Use the database object (db) in your routes or wherever needed
-        app.use("/login", loginRoute(db));
+        app.use('/login', cors(corsOptions), loginRoute(db));
 
         app.listen(port, () => {
             console.log(`Server is running on port: ${port}`);
