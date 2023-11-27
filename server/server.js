@@ -3,12 +3,17 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const connectToMongo = require("./db/conn");
-
 const loginRoute = require("./routes/login");
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(
+    cors({
+        origin: "https://mern-tan.vercel.app",
+        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+        credentials: true,
+    })
+);
 app.use(express.json());
 
 // Connect to the MongoDB using the connection function
