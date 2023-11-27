@@ -24,7 +24,17 @@ const corsOptions = {
     preflightContinue: true, // Enable handling preflight requests
 };
 
+// Apply CORS middleware globally for all routes
 app.use(cors(corsOptions));
+
+// Define a specific OPTIONS route for '/login'
+app.options('/login', (req, res) => {
+    res.header('Access-Control-Allow-Origin', 'https://mern-omega-livid.vercel.app');
+    res.header('Access-Control-Allow-Methods', 'POST');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.sendStatus(200);
+});
 
 // Connect to the MongoDB using the connection function
 connectToMongo()
@@ -32,7 +42,7 @@ connectToMongo()
         console.log("Connected to MongoDB");
 
         // Use the database object (db) in your routes or wherever needed
-        app.use('/login', cors(corsOptions), loginRoute(db));
+        app.use('/login', loginRoute(db));
 
         app.listen(port, () => {
             console.log(`Server is running on port: ${port}`);
