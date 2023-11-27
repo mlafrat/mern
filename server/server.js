@@ -28,8 +28,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Define a specific OPTIONS route for '/login'
-app.options('/login', cors(corsOptions), (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'https://mern-omega-livid.vercel.app');
+app.options('/login', (req, res) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.header('Access-Control-Allow-Methods', 'POST');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     res.header('Access-Control-Allow-Credentials', 'true');
