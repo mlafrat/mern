@@ -1,27 +1,28 @@
 const express = require("express");
 const app = express();
-cors = require("cors");
 const port = process.env.PORT || 5000;
 
-app.get('/cors', (req, res) => {
-    res.set('Access-Control-Allow-Origin', '*');
-    res.send({ "msg": "This has CORS enabled 🎈" })
-})
+const allowCors = fn => async (req, res) => {
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    );
+    if (req.method === 'OPTIONS') {
+        res.status(200).end();
+        return;
+    }
+    return await fn(req, res);
+};
 
-app.options('/login', (req, res) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'POST');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    res.sendStatus(200);
-    console.log('Preflight request for /login received');
-});
+const handler = (req, res) => {
+    const d = new Date();
+    res.end(d.toString());
+};
 
-app.post('/login', (req, res) => {
-    res.sendStatus(200);
-    console.log('POST request to /login received');
-    console.log(req.body);
-});
+app.use('/login', allowCors(handler)); // Applying the allowCors middleware to the /login route
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
