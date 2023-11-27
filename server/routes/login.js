@@ -1,6 +1,10 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const cors = require('cors'); // Import cors module
+
+// Enable CORS for this specific route
+router.use(cors());
 
 module.exports = function (db) {
     // Define a route for handling login
