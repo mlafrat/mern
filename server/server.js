@@ -7,14 +7,18 @@ const loginRoute = require("./routes/login");
 
 const port = process.env.PORT || 5000;
 
-app.use(
-    cors({
-        origin: "https://mern-tan.vercel.app",
-        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-        credentials: true,
-    })
-);
-app.use(express.json());
+// Allow requests from specific origins
+const allowedOrigins = ['https://mern-tan.vercel.app'];
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+}));
 
 // Connect to the MongoDB using the connection function
 connectToMongo()
