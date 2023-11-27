@@ -28,7 +28,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Define a specific OPTIONS route for '/login'
-app.options('/login', (req, res) => {
+app.options('/login', cors(corsOptions), (req, res) => {
     res.header('Access-Control-Allow-Origin', 'https://mern-omega-livid.vercel.app');
     res.header('Access-Control-Allow-Methods', 'POST');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
