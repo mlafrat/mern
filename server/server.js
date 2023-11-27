@@ -24,6 +24,8 @@ const corsOptions = {
     preflightContinue: true, // Enable handling preflight requests
 };
 
+app.use(cors(corsOptions));
+
 // Connect to the MongoDB using the connection function
 connectToMongo()
     .then((db) => {
