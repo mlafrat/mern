@@ -26,11 +26,20 @@ app.options('/login', cors(corsOptions), (req, res) => {
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     res.header('Access-Control-Allow-Credentials', 'true');
     res.sendStatus(200);
+    console.log('Preflight request for /login received');
 });
 
 app.post('/login', cors(corsOptions), (req, res) => {
     res.sendStatus(200);
+    console.log('POST request to /login received');
     console.log(req.body);
+});
+
+app.use((err, req, res, next) => {
+    if (err) {
+        console.error('CORS error:');
+    }
+    next();
 });
 
 app.listen(port, () => {
