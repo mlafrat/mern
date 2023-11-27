@@ -11,6 +11,7 @@ const Login = () => {
 
         try {
             const response = await fetch(`${apiUrl}/login`, {
+                mode: 'cors',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
